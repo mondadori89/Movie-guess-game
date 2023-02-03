@@ -1,7 +1,10 @@
 <template>
     <div class="col-md-auto" id="StartButton">
         <router-link to="/game">
-            <button type="button" class="btn btn-secondary btn-lg">Start</button>
+            <button 
+                type="button" 
+                class="btn btn-secondary btn-lg"
+            >Start</button>
         </router-link>
     </div>
 </template>

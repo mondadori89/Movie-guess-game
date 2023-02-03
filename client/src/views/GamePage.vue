@@ -9,20 +9,38 @@
             <div class="guessOption testBorder"><h2>opção3</h2></div>
             <div class="guessOption testBorder"><h2>opção4</h2></div>
         </div>
-        <router-link to="/">
-            <button type="button" class="btn btn-secondary btn-lg">Leeets paly</button>
-        </router-link>
-        
+        <button 
+            type="button" 
+            class="btn btn-secondary btn-lg"
+            @click="generateMovie"
+        >Leeets play</button>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'GamePage',
-        props: {
-            msg: String
+import { fetchTarantinoMovie } from '../helpers/generateMovie.js';
+
+export default {
+    name: 'GamePage',
+    props: {
+        msg: String
+    },
+    data() {
+        return {
+            title: '',
+            imageUrl: '',
         }
-    }
+    },
+    methods: {
+        async generateMovie() {
+            const { title, imageUrl } = await fetchTarantinoMovie();
+            this.title = title;
+            this.imageUrl = imageUrl;
+            console.log(this.title)
+            console.log(this.imageUrl)
+        }
+    },
+}
 </script>
 
 <style scoped>
