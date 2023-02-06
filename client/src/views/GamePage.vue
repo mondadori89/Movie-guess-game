@@ -1,27 +1,31 @@
 <template>
     <div class="gameContainer testBorder" id="GameDiv">
         <div>
-            <h1 class="movieImage testBorder">Imagem aqui</h1>
+            <img v-if="imageUrl" key="movieImage" :src="imageUrl" alt="movieImage" />
         </div>
         <div class="guesses testBorder">
-            <div class="guessOption testBorder"><h2>opção1</h2></div>
-            <div class="guessOption testBorder"><h2>opção2</h2></div>
-            <div class="guessOption testBorder"><h2>opção3</h2></div>
-            <div class="guessOption testBorder"><h2>opção4</h2></div>
+            <TitleButton :randomTitle='randomTitles[0]' :rightTitle='title' />
+            <TitleButton :randomTitle='randomTitles[1]' :rightTitle='title' />
+            <TitleButton :randomTitle='randomTitles[2]' :rightTitle='title' />
+            <TitleButton :randomTitle='randomTitles[3]' :rightTitle='title' />
         </div>
         <button 
             type="button" 
             class="btn btn-secondary btn-lg"
-            @click="generateMovie"
-        >Leeets play</button>
+            @click="generateMovie" 
+        >Next</button>
     </div>
 </template>
 
 <script>
-import { fetchTarantinoMovie } from '../helpers/generateMovie.js';
+import TitleButton from '../components/TitleButton.vue';
+import { fetchTarantinoMovie, generateRandomMovie } from '../helpers/generateMovie.js';
 
 export default {
     name: 'GamePage',
+    components: {
+        TitleButton
+    },
     props: {
         msg: String
     },
@@ -29,6 +33,8 @@ export default {
         return {
             title: '',
             imageUrl: '',
+            otherMovies: [],
+            randomTitles: [],
         }
     },
     methods: {
@@ -38,7 +44,31 @@ export default {
             this.imageUrl = imageUrl;
             console.log(this.title)
             console.log(this.imageUrl)
-        }
+            this.generateOtherOptions();
+            this.randomizeTitles();
+        },
+        generateOtherOptions() {
+            this.otherMovies = [];
+            while (this.otherMovies.length < 3) {
+                const otherMovie = generateRandomMovie();
+                if (otherMovie.title == this.title) {
+                    continue
+                }
+                if (this.otherMovies.includes(otherMovie)) {
+                    continue;
+                }
+                this.otherMovies.push(otherMovie);
+            }
+        },
+        randomizeTitles() {
+            this.randomTitles = [];
+            this.randomTitles = [this.title, ...this.otherMovies.map(movie => movie.title)];
+            this.randomTitles.sort(() => Math.random() - 0.5);
+            console.log(this.randomTitles)
+        },
+    },
+    async mounted() {
+        this.generateMovie();
     },
 }
 </script>
@@ -55,6 +85,14 @@ export default {
     background-color: #ffffff;
     color: #000000;
     border: 1px solid #000000;
+}
+
+#greenButton {
+    background-color: #00ff00;
+    color: #000000;
+    border: 1px solid #000000;
+    font-size: 2rem;
+    padding: 1rem 3rem;
 }
 
 #GameDiv {

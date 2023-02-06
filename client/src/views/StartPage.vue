@@ -31,5 +31,12 @@
     color: #000000;
     border: 1px solid #000000;
 }
+#StartButton {
+  margin-top: 5rem;
+  padding: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 </style>

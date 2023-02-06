@@ -12,16 +12,10 @@ export default {
 
 <style>
 #app {
-  background-image: url('./assets/moviestrip.png');
+  /* background-image: url('./assets/moviestrip.png');
   background-position: center;
-  background-repeat: no-repeat;
-}
-#StartButton {
-  margin-top: 5rem;
-  padding: 10rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-repeat: no-repeat; */
+  background-color: #e2e2e2;
 }
 
 </style>
